@@ -59,7 +59,10 @@ const updateFinalScore = () => {
 
 const updateScoreList = (data, currentScore) => {
   // TODO: スコア一覧の表示部分を実装してください
+  
 }
+
+
 
 const makeQuestion = () => {
   context.answer = Math.floor(Math.random() * soundFiles.length)
@@ -155,6 +158,8 @@ const onLoadResultScene = async () => {
   // スコアの保存・取得
   // TODO: スコア保存・スコア一覧の表示部分を実装してください
 }
+
+  
 
 const fetchScoreList = async () => {
 }

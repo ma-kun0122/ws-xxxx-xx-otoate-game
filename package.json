@@ -1,0 +1,23 @@
+{
+  "name": "ws-xxxx-xx-otoate-game",
+  "version": "1.0.0",
+  "description": "デモ: https://version1-workspace.github.io/ws-xxxx-xx-otoate-game/front-js/",
+  "main": "index.js",
+  "dependencies": {
+    "mongodb": "^3.6.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ma-kun0122/ws-xxxx-xx-otoate-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ma-kun0122/ws-xxxx-xx-otoate-game/issues"
+  },
+  "homepage": "https://github.com/ma-kun0122/ws-xxxx-xx-otoate-game#readme"
+}
