@@ -1,3 +1,7 @@
+//フロント側JS
+
+
+//
 const PROBLEM_COUNT = 5
 
 const soundFiles = [
@@ -59,6 +63,10 @@ const updateFinalScore = () => {
 
 const updateScoreList = (data, currentScore) => {
   // TODO: スコア一覧の表示部分を実装してください
+
+
+
+
 }
 
 const makeQuestion = () => {
@@ -99,7 +107,20 @@ const moveToResultScene = () => {
   onLoadResultScene()
 }
 
-const onLoadStartScene = () => {
+//最初のスタート画面。非同期処理のコードで記述。
+const onLoadStartScene = async() => {
+ 
+  const data = await fetch('http://localhost:3300/api/v1/scores')//GETメソッドの定数→○
+  const json = await data.json() //GETでとって来たものをjsonで返す定数→○ 
+  const createScore = await fetch('http://localhost:3300/api/v1/create-scores',{
+    method: "POST",
+    body: JSON.stringify(data)
+  }); //json形式でPOSTする定数
+
+  console.log(createScore) //それを実行してjsonを追加
+
+  console.log(json);//出力→○
+
   elements.startButton.addEventListener('click', () => {
     context.name = elements.input.value
     if (!context.name) {
@@ -152,11 +173,18 @@ const onLoadResultScene = async () => {
   // 最終スコアの書き込み
   updateFinalScore()
 
-  // スコアの保存・取得
+  // 最終スコアの保存・取得→　①ゲーム結果(name&score)のPOSTリクエストを送る処理　②既に登録されているスコアのGETリクエストを送る処理
+  playerName
+  finalScore
+
   // TODO: スコア保存・スコア一覧の表示部分を実装してください
+
+
+
 }
 
 const fetchScoreList = async () => {
+  
 }
 
 const createScore = async (params) => {
