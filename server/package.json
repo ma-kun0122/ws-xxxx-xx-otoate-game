@@ -1,17 +1,17 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "description": "- express - mongoose",
   "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "start": "node index.js"
-  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.11"
+    "mongoose": "^5.11.12"
   },
-  "description": "- express - mongoose",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "author": "",
-  "devDependencies": {}
+  "license": "ISC"
 }

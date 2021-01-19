@@ -107,19 +107,30 @@ const moveToResultScene = () => {
   onLoadResultScene()
 }
 
-//最初のスタート画面。非同期処理のコードで記述。
+//最初のスタート画面。
 const onLoadStartScene = async() => {
  
+  //ここからGETメソッド
   const data = await fetch('http://localhost:3300/api/v1/scores')//GETメソッドの定数→○
   const json = await data.json() //GETでとって来たものをjsonで返す定数→○ 
-  const createScore = await fetch('http://localhost:3300/api/v1/create-scores',{
-    method: "POST",
-    body: JSON.stringify(data)
-  }); //json形式でPOSTする定数
+  
+  
 
+  //ここからPOSTメソッド
+  const sumpleOjject ={ "name" : "テスト","score": 1000 }//サンプルのJSON。mongoDBからとって来たわけではない
+  const createScore = await fetch('http://localhost:3300/api/v1/scores', {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(sumpleOjject) 
+  })
+
+  
   console.log(createScore) //それを実行してjsonを追加
 
   console.log(json);//出力→○
+
 
   elements.startButton.addEventListener('click', () => {
     context.name = elements.input.value
