@@ -40,7 +40,7 @@ app.get('/api/v1/scores',(req,res) =>{
 //POSTリクエスト
 app.post('/api/v1/scores', function (req, res) {
     if (!req.body){
-        return res.status(500).send('reqest body empty.');
+        return res.status(500).send('request body empty.');
     }
 
     const instance = new Score();

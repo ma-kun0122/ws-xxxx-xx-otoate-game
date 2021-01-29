@@ -1,7 +1,4 @@
-//フロント側JS
 
-
-//
 const PROBLEM_COUNT = 5
 
 const soundFiles = [
@@ -58,15 +55,38 @@ const updatePlayerName = () => {
 }
 
 const updateFinalScore = () => {
-  elements.finalScore = context.score
+  elements.finalScore.innerText = context.score
 }
 
 const updateScoreList = (data, currentScore) => {
-  // TODO: スコア一覧の表示部分を実装してください
+  // TODO: スコア一覧の表示部分を実装してください　→取ってきたJSONをDOM操作で、HTML等に変換する関数
 
-
-
-
+  data.forEach((item, index) => {
+    const list = document.createElement('li')
+    list.classList.add('score-item')
+    list.innerHTML = `
+      <div>
+        <p>
+          ${index+1}. ${item.name}
+        </p>
+      </div>
+      <div class="score-result">
+        <p>
+          ${item.score}
+        </p>
+      </div>
+    `
+    if (item._id === currentScore._id) {
+      list.classList.add('current')
+      setTimeout(() => {
+        list.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        })
+      }, 500)
+    }
+    elements.scoreList.appendChild(list)
+  })
 }
 
 const makeQuestion = () => {
@@ -109,29 +129,7 @@ const moveToResultScene = () => {
 
 //最初のスタート画面。
 const onLoadStartScene = async() => {
- 
-  //ここからGETメソッド
-  const data = await fetch('http://localhost:3300/api/v1/scores')//GETメソッドの定数→○
-  const json = await data.json() //GETでとって来たものをjsonで返す定数→○ 
   
-  
-
-  //ここからPOSTメソッド
-  const sumpleOjject ={ "name" : "テスト","score": 1000 }//サンプルのJSON。mongoDBからとって来たわけではない
-  const createScore = await fetch('http://localhost:3300/api/v1/scores', {
-    method: 'POST', 
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(sumpleOjject) 
-  })
-
-  
-  console.log(createScore) //それを実行してjsonを追加
-
-  console.log(json);//出力→○
-
-
   elements.startButton.addEventListener('click', () => {
     context.name = elements.input.value
     if (!context.name) {
@@ -184,23 +182,33 @@ const onLoadResultScene = async () => {
   // 最終スコアの書き込み
   updateFinalScore()
 
-  // 最終スコアの保存・取得→　①ゲーム結果(name&score)のPOSTリクエストを送る処理　②既に登録されているスコアのGETリクエストを送る処理
-  playerName
-  finalScore
-
-  // TODO: スコア保存・スコア一覧の表示部分を実装してください
-
-
-
-}
+  // スコアの保存・取得
+    const record = await createScore({
+      name,
+      score
+    })
+    const data = await fetchScoreList()
+    updateScoreList(data, record)
+  }
 
 const fetchScoreList = async () => {
-  
+  //取得・・・GETメソッド(保存しておいたデータを一覧で取得する)
+  const data = await fetch('http://localhost:3300/api/v1/scores')//GETメソッドの定数→○
+  return await data.json() //GETでDBからとって来たものをjsonでreturn
 }
 
-const createScore = async (params) => {
-}
+const createScore = async (params) => {//保存・・・POSTメソッド(先に結果をDBに保存する。その後でGETで一覧取得し、プレイヤーのものだけDOM操作)
+    const data = await fetch('http://localhost:3300/api/v1/scores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+    return await data.json()//追加→成功。JSON形式で入っていた。DBにも同じ内容が入っている。
+  }
 
 const init = onLoadStartScene
 
 init()
+
