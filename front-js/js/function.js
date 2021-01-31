@@ -59,7 +59,7 @@ const updateFinalScore = () => {
 }
 
 const updateScoreList = (data, currentScore) => {
-  // TODO: スコア一覧の表示部分を実装してください　→取ってきたJSONをDOM操作で、HTML等に変換する関数
+  // TODO: スコア一覧の表示部分を実装してください　→取ってきたJSONをDOM操作
 
   data.forEach((item, index) => {
     const list = document.createElement('li')

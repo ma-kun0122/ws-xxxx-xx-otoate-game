@@ -27,7 +27,7 @@ app.use(function(_req, res, next) {
 //GETリクエスト
 app.get('/api/v1/scores',(req,res) =>{
     //データを取得する処理を書く
-    Score.find(function(err, result){
+    Score.find( {}, null, {sort: {score: -1}}, function(err, result){
         if(!err) {
             return res.json(result);
         } else {
@@ -35,7 +35,7 @@ app.get('/api/v1/scores',(req,res) =>{
         }
     });
 });
-
+//sortの部分参照記事：https://medium.com/@jeanjacquesbagui/in-mongoose-sort-by-date-node-js-4dfcba254110
 
 //POSTリクエスト
 app.post('/api/v1/scores', function (req, res) {
@@ -46,11 +46,13 @@ app.post('/api/v1/scores', function (req, res) {
     const instance = new Score();
     instance.name = req.body.name;
     instance.score = req.body.score;
+    
 
     // MongoDBに保存
-    instance.save(function(err){
+    instance.save(function(err,result){
         if(!err) {
-            return res.status(200).send('user create success.');
+            return res.json(result) ;
+            
         } else {
             return res.status(500).send('user create faild.');
         }
@@ -59,13 +61,6 @@ app.post('/api/v1/scores', function (req, res) {
 
 
 
-app.delete('/api/v1/scores', function (req, res) {
-    Score.delete()
-});
 
-
-
-
-
-// イベント待機(どの番地のポートで待ち受けるか)
+// イベント待機(どのポートで待ち受けるか)
 app.listen(3300, () => console.log('Listening on port 3300'));
